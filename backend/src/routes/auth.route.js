@@ -1,5 +1,12 @@
 import express from "express";
-import { login, logout, singup } from "../controllers/auth.controller.js";
+import {
+  checkAuth,
+  login,
+  logout,
+  singup,
+  updateProfile,
+} from "../controllers/auth.controller.js";
+import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -9,7 +16,8 @@ router.post("/login", login);
 
 router.post("/logout", logout);
 
-export default router;
+router.post("/update-profile", protectRoute, updateProfile);
 
-//W8flONN1pN8wyVwm;
-//mongodb+srv://vermaranjan62:<db_password>@cluster0.urr6t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+router.get("/check", protectRoute, checkAuth);
+
+export default router;
